@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Get Well Soon Mimi ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    overflow-x: hidden;
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    font-size: 3em;
+    margin-top: 20px;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 30px #ff4da6; }
+}
+
+.container {
+    padding: 20px;
+}
+
+.btn {
+    padding: 15px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.yes {
+    background-color: #ff4da6;
+    color: white;
+}
+
+.no {
+    background-color: white;
+    color: #ff4da6;
+    position: absolute;
+}
+
+.gallery img {
+    width: 200px;
+    margin: 10px;
+    border-radius: 15px;
+    transition: transform 0.5s;
+}
+
+.gallery img:hover {
+    transform: scale(1.1);
+}
+
+.message {
+    display: none;
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+.heart {
+    position: fixed;
+    color: red;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Get Well Soon Mimi ❤️</h1>
+
+<div class="container">
+
+<p style="font-size:20px;">
+Mimi... you mean so much to me 💖  
+I just want to see your beautiful smile again 😊  
+Please get well soon... for me ❤️
+</p>
+
+<h2>Will you get well soon for me? 🥺</h2>
+
+<button class="btn yes" onclick="showLove()">YES 💖</button>
+<button class="btn no" id="noBtn">NO 😢</button>
+
+<div class="message" id="loveMessage">
+    <h2>YAYYY 😍💖</h2>
+    <p>You are strong, beautiful, and you WILL get better soon 💕</p>
+    <p>I miss you so much... come back smiling 😊</p>
+</div>
+
+<h2>Our Memories 📸</h2>
+
+<div class="gallery">
+    <img src="18.png">
+    <img src="22.png">
+    <img src="25.png">
+    <img src="27.png">
+</div>
+
+</div>
+
+<audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function showLove() {
+    document.getElementById("loveMessage").style.display = "block";
+    createHearts();
+}
+
+let noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", function() {
+    noBtn.style.top = Math.random() * window.innerHeight + "px";
+    noBtn.style.left = Math.random() * window.innerWidth + "px";
+});
+
+function createHearts() {
+    for (let i = 0; i < 50; i++) {
+        let heart = document.createElement("div");
+        heart.innerHTML = "❤️";
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }
+}
+</script>
+
+</body>
+</html>
