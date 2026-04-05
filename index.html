@@ -2,107 +2,151 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Get Well Soon Mimi ❤️</title>
 
 <style>
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
-    overflow-x: hidden;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
     text-align: center;
     color: white;
+    overflow-x: hidden;
 }
 
+/* Glowing MIMI */
 h1 {
-    font-size: 3em;
+    font-size: 2.8em;
     margin-top: 20px;
-    animation: glow 2s infinite alternate;
+    animation: colorGlow 4s infinite;
 }
 
-@keyframes glow {
-    from { text-shadow: 0 0 10px #fff; }
-    to { text-shadow: 0 0 30px #ff4da6; }
+@keyframes colorGlow {
+    0% { color: #ff4da6; text-shadow: 0 0 20px #ff4da6; }
+    25% { color: #ff66cc; text-shadow: 0 0 25px #ff66cc; }
+    50% { color: #ff99cc; text-shadow: 0 0 30px #ff99cc; }
+    75% { color: #ff66ff; text-shadow: 0 0 25px #ff66ff; }
+    100% { color: #ff4da6; text-shadow: 0 0 20px #ff4da6; }
 }
 
 .container {
-    padding: 20px;
+    padding: 15px;
 }
 
-.btn {
-    padding: 15px 25px;
+p {
     font-size: 18px;
+    line-height: 1.5;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 20px;
+    font-size: 16px;
     border: none;
     border-radius: 25px;
+    margin: 8px;
     cursor: pointer;
-    margin: 10px;
+    transition: 0.3s;
 }
 
 .yes {
-    background-color: #ff4da6;
+    background: #ff4da6;
     color: white;
 }
 
 .no {
-    background-color: white;
+    background: white;
     color: #ff4da6;
     position: absolute;
 }
 
+/* Gallery */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .gallery img {
-    width: 200px;
-    margin: 10px;
+    width: 42%;
+    max-width: 180px;
+    margin: 8px;
     border-radius: 15px;
-    transition: transform 0.5s;
+    transition: 0.4s;
 }
 
 .gallery img:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
+/* Message */
 .message {
     display: none;
-    font-size: 1.5em;
-    margin-top: 20px;
+    font-size: 1.4em;
+    margin-top: 15px;
 }
 
+/* Hearts */
 .heart {
     position: fixed;
-    color: red;
-    animation: float 5s linear infinite;
+    animation: floatUp 5s linear forwards;
 }
 
-@keyframes float {
+@keyframes floatUp {
     from { transform: translateY(100vh); }
     to { transform: translateY(-10vh); }
+}
+
+/* Fireworks canvas */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+/* Sad Button */
+.sad-btn {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.sad-message {
+    margin-top: 10px;
+    font-size: 16px;
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="fireworks"></canvas>
+
 <h1>Get Well Soon Mimi ❤️</h1>
 
 <div class="container">
 
-<p style="font-size:20px;">
-Mimi... you mean so much to me 💖  
-I just want to see your beautiful smile again 😊  
-Please get well soon... for me ❤️
+<p>
+Mimi… 💖  
+You are my favorite person in this world  
+And seeing you unwell hurts me 😔  
+Please come back stronger… I miss your smile so much 😊
 </p>
 
-<h2>Will you get well soon for me? 🥺</h2>
+<h3>Will you get well soon for me? 🥺</h3>
 
 <button class="btn yes" onclick="showLove()">YES 💖</button>
 <button class="btn no" id="noBtn">NO 😢</button>
 
 <div class="message" id="loveMessage">
-    <h2>YAYYY 😍💖</h2>
-    <p>You are strong, beautiful, and you WILL get better soon 💕</p>
-    <p>I miss you so much... come back smiling 😊</p>
+    <h2>YAYYYY 😍💖</h2>
+    <p>You are strong, beautiful, and unstoppable 💕</p>
+    <p>I’m always here for you ❤️</p>
 </div>
 
-<h2>Our Memories 📸</h2>
+<h3>Our Memories 📸</h3>
 
 <div class="gallery">
     <img src="18.png">
@@ -111,27 +155,36 @@ Please get well soon... for me ❤️
     <img src="27.png">
 </div>
 
+<button class="btn sad-btn" onclick="showSadMessage()">Click when you feel sad 💌</button>
+<p class="sad-message" id="sadText"></p>
+
 </div>
 
 <audio autoplay loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
 </audio>
 
 <script>
+/* YES CLICK */
 function showLove() {
     document.getElementById("loveMessage").style.display = "block";
     createHearts();
+    startFireworks();
 }
 
+/* NO BUTTON RUN */
 let noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("mouseover", moveNo);
 
-noBtn.addEventListener("mouseover", function() {
-    noBtn.style.top = Math.random() * window.innerHeight + "px";
-    noBtn.style.left = Math.random() * window.innerWidth + "px";
-});
+function moveNo() {
+    noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+    noBtn.style.left = Math.random() * (window.innerWidth - 50) + "px";
+}
 
+/* HEARTS */
 function createHearts() {
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
         let heart = document.createElement("div");
         heart.innerHTML = "❤️";
         heart.className = "heart";
@@ -139,11 +192,70 @@ function createHearts() {
         heart.style.fontSize = (Math.random() * 20 + 10) + "px";
         document.body.appendChild(heart);
 
-        setTimeout(() => {
-            heart.remove();
-        }, 5000);
+        setTimeout(() => heart.remove(), 5000);
     }
 }
+
+/* SAD MESSAGES */
+const messages = [
+"Everything will be okay 💖",
+"You are stronger than this 💪",
+"I’m always with you ❤️",
+"Your smile will come back soon 😊",
+"You mean the world to me 🌍"
+];
+
+function showSadMessage() {
+    let msg = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById("sadText").innerText = msg;
+}
+
+/* FIREWORKS */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function startFireworks() {
+    setInterval(() => {
+        for (let i = 0; i < 30; i++) {
+            particles.push({
+                x: canvas.width / 2,
+                y: canvas.height / 2,
+                dx: (Math.random() - 0.5) * 6,
+                dy: (Math.random() - 0.5) * 6,
+                life: 100
+            });
+        }
+    }, 600);
+}
+
+function animate() {
+    ctx.fillStyle = "rgba(0,0,0,0.1)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach((p, i) => {
+        p.x += p.dx;
+        p.y += p.dy;
+        p.life--;
+
+        ctx.fillStyle = "pink";
+        ctx.fillRect(p.x, p.y, 3, 3);
+
+        if (p.life <= 0) particles.splice(i,1);
+    });
+
+    requestAnimationFrame(animate);
+}
+animate();
+
+/* Resize fix */
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
 </script>
 
 </body>
